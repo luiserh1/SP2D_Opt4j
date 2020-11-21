@@ -25,6 +25,11 @@ public class Coords {
 		return "(" + this.x + ", " + this.y + ")";
 	}
 	
+	public String toJson()
+	{
+		return "[" + this.x + ", " + this.y + "]";
+	}
+	
 	public boolean isPlaced() { return (this.x > -1); }
 	
 }

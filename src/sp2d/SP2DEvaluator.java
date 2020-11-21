@@ -9,8 +9,8 @@ public class SP2DEvaluator implements Evaluator<BlocksDistribution>{
 	@Override
 	public Objectives evaluate(BlocksDistribution pheno) {		
 		Objectives objectives = new Objectives();
-		float value = pheno.evaluate();
-		objectives.add("Porción Colocados-MAX", Sign.MAX, value);
+		int value = pheno.evaluate();
+		objectives.add("Bloques Colocados-MAX[" + Data.numBlocks + "]", Sign.MAX, value);
 		
 		//System.out.println(placedBlocks + "/" + Data.numBlocks + "=" + value);
 		return objectives;

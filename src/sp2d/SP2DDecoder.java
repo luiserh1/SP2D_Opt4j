@@ -2,13 +2,12 @@ package sp2d;
 
 import java.util.Iterator;
 
-import org.opt4j.core.genotype.PermutationGenotype;
 import org.opt4j.core.problem.Decoder;
 
-public class SP2DDecoder implements Decoder<PermutationGenotype<Integer>, BlocksDistribution> {
+public class SP2DDecoder implements Decoder<SP2DGenotype, BlocksDistribution> {
 
 	@Override
-	public BlocksDistribution decode(PermutationGenotype<Integer> geno) {
+	public BlocksDistribution decode(SP2DGenotype geno) {
 		Coords[] phenoCoords = new Coords[Data.numBlocks];
 		
 		for (int i = 0; i < Data.numBlocks; i++)

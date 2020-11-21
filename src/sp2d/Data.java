@@ -7,9 +7,14 @@ import java.io.IOException;
 
 public class Data {
 	public static final boolean verboseDecoder = false;
-	public static final boolean verboseCreator = true;
-	public static final boolean verboseInit = false;
-	public static final boolean verboseConfig = true;
+	public static final boolean verboseCreator = false;
+	public static final boolean verboseInit = true;
+	public static final boolean verboseConfig = false;
+	public static final int verboseSols = 1;
+	
+	public static int bestSol;
+	public static int currentEvaluation;
+	
 	public static final int SIZEX = 0, SIZEY = 1;
 	public static int numBlocks;
 	public static int maxHeigth;
@@ -18,6 +23,8 @@ public class Data {
 	
 	public static void loadData(String filePath)
 	{
+		bestSol = 0;
+		currentEvaluation = 0;
 		try
 		{
 			File file = new File(filePath); 
@@ -52,21 +59,23 @@ public class Data {
 				count++;
 			}
 			br.close();
+			if (verboseInit)
+				System.out.println("Success reading the file: " + filePath);
 			return;
 		}
 		catch (IOException e)
 		{
 			if (verboseInit)
-				System.out.println("ERROR: Fail reading the file");
+				System.out.println("ERROR: Fail reading the file: " + filePath);
 		}
 		catch (Exception e)
 		{
 			if (verboseInit)
-				System.out.println("ERROR: Incorrect format of file");
+				System.out.println("ERROR: Incorrect format of file: " + filePath);
 		}
 		if (verboseInit)
 		System.out.println("Using default random config");
-		loadData(5000, 25, 25, 0.33f);
+		loadData(5000, 25, 25, 0.5f);
 	}
 	
 	public static void loadData(int numBlocks, int maxWidth, int maxHeigth, float maxSideSizeProportion)
