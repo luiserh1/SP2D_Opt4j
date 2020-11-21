@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Data {
+	public static final boolean verboseDecoder = false;
+	public static final boolean verboseCreator = true;
+	public static final boolean verboseInit = false;
+	public static final boolean verboseConfig = true;
 	public static final int SIZEX = 0, SIZEY = 1;
 	public static int numBlocks;
 	public static int maxHeigth;
@@ -52,23 +56,38 @@ public class Data {
 		}
 		catch (IOException e)
 		{
-			System.out.println("ERROR: Fail reading the file");
+			if (verboseInit)
+				System.out.println("ERROR: Fail reading the file");
 		}
 		catch (Exception e)
 		{
-			System.out.println("ERROR: Incorrect format of file");
+			if (verboseInit)
+				System.out.println("ERROR: Incorrect format of file");
 		}
-		System.out.println("Using default config");
-		
-		numBlocks = 12;
-		maxHeigth = 10;
-		maxWidth = 10;
+		if (verboseInit)
+		System.out.println("Using default random config");
+		loadData(5000, 25, 25, 0.33f);
+	}
+	
+	public static void loadData(int numBlocks, int maxWidth, int maxHeigth, float maxSideSizeProportion)
+	{
+		Data.numBlocks = numBlocks;
+		Data.maxHeigth = maxHeigth;
+		Data.maxWidth = maxWidth;
 		blockSizes = new int[numBlocks][2];
 		for (int i = 0; i < numBlocks; i++)
 		{
-			blockSizes[i][1] = (int) (Math.random() * maxHeigth + 1);
-			blockSizes[i][0] = (int) (Math.random() * maxWidth + 1);
+			blockSizes[i][1] = (int) (Math.random() * maxHeigth * maxSideSizeProportion + 1);
+			blockSizes[i][0] = (int) (Math.random() * maxWidth * maxSideSizeProportion  + 1);
 		}
-		
+	}
+	
+	public static void printDataInfo()
+	{
+		System.out.println("Number of placebale blocks: " + numBlocks);
+		System.out.println("Area limited to "  + maxWidth + "[MaxWidth] and " + maxHeigth + "[MaxHeigth]");
+		System.out.println("Block Ids and their size(sideX, sideY)");
+		for (int i = 0; i < numBlocks; i++)
+			System.out.println(i + "=(" + blockSizes[i][0] + ", " + blockSizes[i][1] + ")");
 	}
 }

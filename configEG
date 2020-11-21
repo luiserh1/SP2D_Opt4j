@@ -1,0 +1,17 @@
+<configuration>
+  <module class="org.opt4j.core.common.logger.LoggerModule">
+    <property name="filename">res/EAP_Aplha100Lambda25Mu25Cr95_RANDOM5000PRPSIDE33.tsv</property>
+    <property name="loggingPerEvaluation">false</property>
+    <property name="evaluationStep">100</property>
+    <property name="loggingPerIteration">true</property>
+    <property name="iterationStep">1</property>
+  </module>
+  <module class="org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule">
+    <property name="generations">100000</property>
+    <property name="alpha">100</property>
+    <property name="mu">25</property>
+    <property name="lambda">25</property>
+    <property name="crossoverRate">0.95</property>
+  </module>
+  <module class="sp2d.SP2DModule"/>
+</configuration>

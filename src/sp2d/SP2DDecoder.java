@@ -5,40 +5,62 @@ import java.util.Iterator;
 import org.opt4j.core.genotype.PermutationGenotype;
 import org.opt4j.core.problem.Decoder;
 
-public class SP2DDecoder implements Decoder<PermutationGenotype<Integer>, Integer[][]> {
+public class SP2DDecoder implements Decoder<PermutationGenotype<Integer>, BlocksDistribution> {
 
 	@Override
-	public Integer[][] decode(PermutationGenotype<Integer> geno) {
-		Integer[][] pheno = new Integer[Data.numBlocks][2];
+	public BlocksDistribution decode(PermutationGenotype<Integer> geno) {
+		Coords[] phenoCoords = new Coords[Data.numBlocks];
 		
 		for (int i = 0; i < Data.numBlocks; i++)
-			pheno[i][0] = -1; // If the X axis value is -1, the block remains unplaced
+			phenoCoords[i] = new Coords();
 		
 		Iterator<Integer> it = geno.iterator();
-		int currentHeigth = 0, currentWidth = 0;
+		int currentY = 0, currentX = 0;
 		int maxHeigthInLine = 0;
 		while(it.hasNext())
 		{
 			int nextBlock = it.next();
 			
 			int sizeX = Data.blockSizes[nextBlock][0];
-			int sizeY = Data.blockSizes[nextBlock][0];
+			int sizeY = Data.blockSizes[nextBlock][1];
 			
-			pheno[nextBlock][0] = currentWidth;
-			pheno[nextBlock][1] = currentHeigth;
+			if (Data.verboseDecoder)
+				System.out.print("nextBlock=" + nextBlock + " | sizeX=" + sizeX + " | sizeY=" + sizeY + " | currentX=" + currentX +
+					" | currentY=" + currentY + " | maxHeigthInLine=" + maxHeigthInLine);
+				
+			if (currentX + sizeX > Data.maxWidth)
+			{
+				if (sizeX > Data.maxWidth)
+					break;
+				
+				currentX = 0;				
+				currentY += maxHeigthInLine;
+				maxHeigthInLine = 0;
+			}
 			
 			if (sizeY > maxHeigthInLine)
-				maxHeigthInLine = sizeY;
-			
-			currentWidth += sizeX;
-			if (currentWidth > Data.maxWidth)
 			{
-				currentWidth = 0;
-				currentHeigth += maxHeigthInLine;
-				if (currentHeigth > Data.maxHeigth)
+				maxHeigthInLine = sizeY;
+				if (currentY + sizeY > Data.maxHeigth)
 					break;
 			}
+			
+			phenoCoords[nextBlock] = new Coords(currentX, currentY);
+			
+			if (Data.verboseDecoder)
+				System.out.print(" || newMaxHeigthInLine=" + maxHeigthInLine);
+			
+			currentX += sizeX;
+			
+			if (Data.verboseDecoder)
+				System.out.println(" | newX=" + currentX + " | newY=" + currentY + 
+						" | coords" + phenoCoords[nextBlock].toString());
+			
 		}
+		
+		BlocksDistribution pheno = new BlocksDistribution(phenoCoords);
+		if (Data.verboseDecoder)
+			System.out.println("\n" + pheno.toString() + "\n==============================");
 		
 		return pheno;
 	}
