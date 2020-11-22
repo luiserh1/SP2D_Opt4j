@@ -10,16 +10,33 @@ public class Data {
 	public static final boolean verboseCreator = false;
 	public static final boolean verboseInit = true;
 	public static final boolean verboseConfig = false;
-	public static final int verboseSols = 1;
+	public static final boolean verboseJSON = true;
+	public static final boolean verboseEvals = true;
 	
 	public static int bestSol;
+	public static boolean newBestSol = false;
 	public static int currentEvaluation;
+	public static BlocksDistribution bestRep;
+	public static long lastIterationTime = System.currentTimeMillis();
 	
 	public static final int SIZEX = 0, SIZEY = 1;
 	public static int numBlocks;
 	public static int maxHeigth;
 	public static int maxWidth;
 	public static int[][] blockSizes;
+	
+	public static float sideSizeMaxProportion;
+	
+	public static String evalsOutput = "res/default.tsv";
+	public static String jsonOutput = "res/default.json";
+	public static String evalsOutputPath;
+	public static String jsonOutputPath;
+	
+	public static enum TestCase
+	{
+			MINI, DEFAULT, BIG, RANDOM
+	};
+	public static TestCase testCase;
 	
 	public static void loadData(String filePath)
 	{
@@ -98,5 +115,22 @@ public class Data {
 		System.out.println("Block Ids and their size(sideX, sideY)");
 		for (int i = 0; i < numBlocks; i++)
 			System.out.println(i + "=(" + blockSizes[i][0] + ", " + blockSizes[i][1] + ")");
+	}
+	
+	public static String jsonDataInfo()
+	{
+		String res = "{\n\t\"numBlocks\":\"" + numBlocks + "\"," + "\n";
+		res += "\t\"maxWidth\":\""  + maxWidth  + "\"," + "\n";
+		res += "\t\"maxHeigth\":\""  + maxHeigth  + "\"," + "\n";
+		res += "\t\"blockSizes\":\n\t[";
+		
+		int i;
+		for (i = 0; i < numBlocks-1; i++)
+			res += "\n\t\t{\n\t\t\t\"id\":\"" + i + "\",\n\t\t\t\"sizeX\":\"" + blockSizes[i][0] +
+				"\", \n\t\t\t\"sizeY\":\"" + blockSizes[i][1] + "\"\n\t\t},";
+		res += "\n\t\t{\n\t\t\t\"id\":\"" + i + "\",\n\t\t\t\"sizeX\":\"" + blockSizes[i][0] +
+				"\", \n\t\t\t\"sizeY\":\"" + blockSizes[i][1] + "\"\n\t\t}\n\t],\n";
+		
+		return res;
 	}
 }

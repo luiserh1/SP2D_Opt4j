@@ -27,7 +27,7 @@ public class Coords {
 	
 	public String toJson()
 	{
-		return "[" + this.x + ", " + this.y + "]";
+		return "{\"x\":\"" + this.x + "\", \"y\":\"" + this.y + "\"}";
 	}
 	
 	public boolean isPlaced() { return (this.x > -1); }
