@@ -14,10 +14,16 @@ public class SP2DIterationListener implements OptimizerIterationListener
 			Data.jsonOutput += str + "\n";
 		}
 		
-		Long deltaMilis = System.currentTimeMillis() - Data.lastIterationTime;
+		Long deltaMilis = System.currentTimeMillis() - Data.preIterationTime;
 		
 		Data.evalsOutput += it + "\t" + Data.currentEvaluation + "\t" + deltaMilis + "\t" + Data.bestSol + "\n";
-		Data.lastIterationTime = System.currentTimeMillis();
+		
+		Data.itersToLogCount++;
+		if (Data.verboseProgress && Data.itersToLogCount > Data.itersToLog)
+		{
+			Data.itersToLogCount = 0;
+			System.out.println(Data.dirSufix + " - " + (int)((float)it / Data.generations * 100) + "%");
+		}
 	}
 
 }

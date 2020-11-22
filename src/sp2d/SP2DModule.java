@@ -6,7 +6,6 @@ public class SP2DModule extends ProblemModule {
 	
 	@Override
 	protected void config() {
-		
 		switch (Data.testCase)
 		{
 			case MINI:
@@ -20,8 +19,7 @@ public class SP2DModule extends ProblemModule {
 				break;
 			case RANDOM:
 			default:
-				Data.sideSizeMaxProportion = 0.66f;
-				Data.loadData(256, 8, 8, Data.sideSizeMaxProportion);
+				Data.loadData(Data.numRandBlocks, Data.maxWidthR, Data.maxHeigthR, Data.sideSizeMaxProportion);
 				break;	
 		}
 		

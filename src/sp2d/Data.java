@@ -5,19 +5,63 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.opt4j.optimizers.sa.CoolingSchedulesModule;
+
 public class Data {
+	// Config. variables
+	// Verbosity
 	public static final boolean verboseDecoder = false;
 	public static final boolean verboseCreator = false;
 	public static final boolean verboseInit = true;
 	public static final boolean verboseConfig = false;
-	public static final boolean verboseJSON = true;
-	public static final boolean verboseEvals = true;
+	public static final boolean verboseJSON = false;
+	public static final boolean verboseEvals = false;
+	public static final boolean verboseProgress = true;
+	
+	// Type of case
+	public static final TestCase testCase = TestCase.DEFAULT;
+	// Algorithm
+	public static final Algorithm algorithm = Algorithm.EA;
+	
+	// Preordeering first
+	public static final boolean preOrderingHeuristic = false;
+	
+	// If TestCae.RANDOM
+	public static final float sideSizeMaxProportion = 0.66f;
+	public static final int numRandBlocks = 4096;
+	public static final int maxHeigthR = 32;
+	public static final int maxWidthR = 32;
+	
+	// When launched from the Main class
+	public static final int generations = 1000; // Or iterations in SA
+	// If Algorithm.EA
+	public static final int alpha = 100;
+	public static final int mu = 25;
+	public static final int lambda = 25;
+	public static final float crossoverRate = 0.95f;
+	// If Algorithm.SA
+	public static CoolingSchedulesModule.Type coolingSchedule = CoolingSchedulesModule.Type.LINEAR; 
+	public static float initialTemperature = 1000.0f;
+	public static float finalTemperature = 10.0f;
+	public static float saAlpha = 0.995f;
+	
+	
+	// Aux. variables, enums...
+	public static enum TestCase
+	{
+			MINI, DEFAULT, BIG, RANDOM
+	};
+	
+	public static enum Algorithm
+	{
+		EA, SA
+	};
 	
 	public static int bestSol;
 	public static boolean newBestSol = false;
 	public static int currentEvaluation;
 	public static BlocksDistribution bestRep;
-	public static long lastIterationTime = System.currentTimeMillis();
+	public static long preIterationTime = System.currentTimeMillis();
 	
 	public static final int SIZEX = 0, SIZEY = 1;
 	public static int numBlocks;
@@ -25,19 +69,18 @@ public class Data {
 	public static int maxWidth;
 	public static int[][] blockSizes;
 	
-	public static float sideSizeMaxProportion;
+	public static String evalsOutput;
+	public static String jsonOutput;
+	public static String evalsOutputPath = "res/default.tsv";
+	public static String jsonOutputPath = "res/default.json";
 	
-	public static String evalsOutput = "res/default.tsv";
-	public static String jsonOutput = "res/default.json";
-	public static String evalsOutputPath;
-	public static String jsonOutputPath;
+	public static int itersToLog;
+	public static int itersToLogCount;
 	
-	public static enum TestCase
-	{
-			MINI, DEFAULT, BIG, RANDOM
-	};
-	public static TestCase testCase;
+	public static String dirSufix = "default";
 	
+	
+	// Aux. Methods
 	public static void loadData(String filePath)
 	{
 		bestSol = 0;
