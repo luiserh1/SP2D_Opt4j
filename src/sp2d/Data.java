@@ -23,9 +23,9 @@ public class Data {
 	public static final int seed = -1;
 	
 	// Type of case
-	public static final TestCase testCase = TestCase.DEFAULT;
+	public static final TestCase testCase = TestCase.MINI;
 	// Algorithm
-	public static final Algorithm algorithm = Algorithm.EA;
+	public static final Algorithm algorithm = Algorithm.SA;
 	
 	// Preordeering first
 	public static final boolean preOrderingHeuristic = true;
@@ -37,16 +37,16 @@ public class Data {
 	public static final int maxWidthR = 32;
 	
 	// When launched from the Main class
-	public static final int generations = 1000000; // Or iterations in SA
+	public static final int generations = 200000; // Or iterations in SA
 	// If Algorithm.EA
 	public static final int alpha = 120;
-	public static final int mu = 10;
-	public static final int lambda = 20;
+	public static final int mu = 6;
+	public static final int lambda = 24;
 	public static final float crossoverRate = 0.95f;
 	// If Algorithm.SA
 	public static CoolingSchedulesModule.Type coolingSchedule = CoolingSchedulesModule.Type.LINEAR; 
 	public static float initialTemperature = 1000.0f;
-	public static float finalTemperature = 1.0f;
+	public static float finalTemperature = 50.0f;
 	public static float saAlpha = 0.995f;
 	
 	

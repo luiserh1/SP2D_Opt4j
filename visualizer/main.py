@@ -104,35 +104,40 @@ def plot_evolution_ea(data_path, first_sol, best_sol, name, desc, filepath, show
     # Plot results
     fig, axs = plt.subplots(nrows=2, ncols=2, figsize=(8, 8))
 
-    axs[0][0].plot(iterations, best_solutions_iter, label='Best (it.)')  # Plot more data on the axes...
-    axs[0][0].plot(iterations, average_solutions_iter, label='Average (it.)')  # ... and some more.
-    axs[0][0].plot(iterations, best_solutions, label='Best (global)')  # Plot some data on the axes.
-    axs[0][0].set_xlabel('Iterations')  # Add an x-label to the axes.
-    axs[0][0].set_ylabel('Placed blocks')  # Add a y-label to the axes.
-    axs[0][0].set_title("Solutions")  # Add a title to the axes.
-    axs[0][0].legend()  # Add a legend.
-    y_ticks = np.arange(0, int(best_solutions[-1] * 1.2), best_solutions[-1] // 10)
-    x_ticks = np.arange(0, int(iterations[-1] * 1.2), iterations[-1] // 5)
-    axs[0][0].set_yticks(y_ticks)
-    axs[0][0].set_xticks(x_ticks)
-    axs[0][0].set_xlim(0, iterations[-1])
-    axs[0][0].set_ylim(0, best_solutions[-1])
+    try:
+        axs[0][0].plot(iterations, best_solutions_iter, label='Best (it.)')  # Plot more data on the axes...
+        axs[0][0].plot(iterations, average_solutions_iter, label='Average (it.)')  # ... and some more.
+        axs[0][0].plot(iterations, best_solutions, label='Best (global)')  # Plot some data on the axes.
+        axs[0][0].set_xlabel('Iterations')  # Add an x-label to the axes.
+        axs[0][0].set_ylabel('Placed blocks')  # Add a y-label to the axes.
+        axs[0][0].set_title("Solutions")  # Add a title to the axes.
+        axs[0][0].legend()  # Add a legend.
+        y_ticks = np.arange(0, int(best_solutions[-1] * 1.2), best_solutions[-1] // 10)
+        x_ticks = np.arange(0, int(iterations[-1] * 1.2), iterations[-1] // 5)
 
-    # Plot times
-    axs[1][0].stackplot(iterations, times)  # Plot more data on the axes...
-    axs[1][0].set_xlabel('Iterations')  # Add an x-label to the axes.
-    axs[1][0].set_ylabel('Since start (ms)')  # Add a y-label to the axes.
-    axs[1][0].set_title("Times")  # Add a title to the axes.
-    y_ticks = np.arange(0, times[-1], times[-1] // 8)
-    axs[1][0].set_yticks(y_ticks)
-    axs[1][0].set_xticks(x_ticks)
-    axs[1][0].set_xlim(0, iterations[-1])
-    axs[1][0].set_ylim(0, times[-1])
+        axs[0][0].set_yticks(y_ticks)
+        axs[0][0].set_xticks(x_ticks)
+        axs[0][0].set_xlim(0, iterations[-1])
+        axs[0][0].set_ylim(0, best_solutions[-1])
 
-    first_sol.get_plot(axs[0][1])
-    axs[0][1].set_title("First Solution")
-    best_sol.get_plot(axs[1][1])
-    axs[1][1].set_title("Best Solution")
+        # Plot times
+        axs[1][0].stackplot(iterations, times)  # Plot more data on the axes...
+        axs[1][0].set_xlabel('Iterations')  # Add an x-label to the axes.
+        axs[1][0].set_ylabel('Since start (ms)')  # Add a y-label to the axes.
+        axs[1][0].set_title("Times")  # Add a title to the axes.
+        y_ticks = np.arange(0, times[-1], times[-1] // 8)
+        axs[1][0].set_yticks(y_ticks)
+        axs[1][0].set_xticks(x_ticks)
+        axs[1][0].set_xlim(0, iterations[-1])
+        axs[1][0].set_ylim(0, times[-1])
+
+        first_sol.get_plot(axs[0][1])
+        axs[0][1].set_title("First Solution")
+        best_sol.get_plot(axs[1][1])
+        axs[1][1].set_title("Best Solution")
+
+    except ZeroDivisionError:
+        print("ERROR: ZeroDivisionError for: " + name + "[" + description + "]")
 
     fig.suptitle(name)
     plt.figtext(0.5, 0.001, desc, wrap=True, ha='center', fontsize=10)
@@ -165,33 +170,36 @@ def plot_evolution_sa(data_path, first_sol, best_sol, name, desc, filepath, show
         # Plot results
         fig, axs = plt.subplots(nrows=2, ncols=2, figsize=(8, 8))
 
-        axs[0][0].plot(iterations, best_solutions, label='Best')  # Plot some data on the axes.
-        axs[0][0].set_xlabel('Iterations')  # Add an x-label to the axes.
-        axs[0][0].set_ylabel('Placed blocks')  # Add a y-label to the axes.
-        axs[0][0].set_title("Solutions")  # Add a title to the axes.
-        axs[0][0].legend()  # Add a legend.
-        y_ticks = np.arange(0, int(best_solutions[-1] * 1.2), best_solutions[-1] // 10)
-        x_ticks = np.arange(0, int(iterations[-1] * 1.2), iterations[-1] // 5)
-        axs[0][0].set_yticks(y_ticks)
-        axs[0][0].set_xticks(x_ticks)
-        axs[0][0].set_xlim(0, iterations[-1])
-        axs[0][0].set_ylim(0, best_solutions[-1])
+        try:
+            axs[0][0].plot(iterations, best_solutions, label='Best')  # Plot some data on the axes.
+            axs[0][0].set_xlabel('Iterations')  # Add an x-label to the axes.
+            axs[0][0].set_ylabel('Placed blocks')  # Add a y-label to the axes.
+            axs[0][0].set_title("Solutions")  # Add a title to the axes.
+            axs[0][0].legend()  # Add a legend.
+            y_ticks = np.arange(0, int(best_solutions[-1] * 1.2), best_solutions[-1] // 10)
+            x_ticks = np.arange(0, int(iterations[-1] * 1.2), iterations[-1] // 5)
+            axs[0][0].set_yticks(y_ticks)
+            axs[0][0].set_xticks(x_ticks)
+            axs[0][0].set_xlim(0, iterations[-1])
+            axs[0][0].set_ylim(0, best_solutions[-1])
 
-        # Plot times
-        axs[1][0].stackplot(iterations, times)  # Plot more data on the axes...
-        axs[1][0].set_xlabel('Iterations')  # Add an x-label to the axes.
-        axs[1][0].set_ylabel('Since start (ms)')  # Add a y-label to the axes.
-        axs[1][0].set_title("Times")  # Add a title to the axes.
-        y_ticks = np.arange(0, times[-1], times[-1] // 8)
-        axs[1][0].set_yticks(y_ticks)
-        axs[1][0].set_xticks(x_ticks)
-        axs[1][0].set_xlim(0, iterations[-1])
-        axs[1][0].set_ylim(0, times[-1])
+            # Plot times
+            axs[1][0].stackplot(iterations, times)  # Plot more data on the axes...
+            axs[1][0].set_xlabel('Iterations')  # Add an x-label to the axes.
+            axs[1][0].set_ylabel('Since start (ms)')  # Add a y-label to the axes.
+            axs[1][0].set_title("Times")  # Add a title to the axes.
+            y_ticks = np.arange(0, times[-1], times[-1] // 8)
+            axs[1][0].set_yticks(y_ticks)
+            axs[1][0].set_xticks(x_ticks)
+            axs[1][0].set_xlim(0, iterations[-1])
+            axs[1][0].set_ylim(0, times[-1])
 
-        first_sol.get_plot(axs[0][1])
-        axs[0][1].set_title("First Solution")
-        best_sol.get_plot(axs[1][1])
-        axs[1][1].set_title("Best Solution")
+            first_sol.get_plot(axs[0][1])
+            axs[0][1].set_title("First Solution")
+            best_sol.get_plot(axs[1][1])
+            axs[1][1].set_title("Best Solution")
+        except ZeroDivisionError:
+            print("ERROR: ZeroDivisionError for: " + name + "[" + description + "]")
 
         fig.suptitle(name)
         plt.figtext(0.5, 0.001, desc, wrap=True, horizontalalignment='center', fontsize=10)
@@ -259,8 +267,8 @@ if __name__ == '__main__':
         descriptors = file_name_no_ext.split("_")
         description = "Gens.:{} Init. Pop:{} Parents:{} C.R.:{}" \
                       " {} Children S.F.:{} Case:{}".format(descriptors[0], descriptors[1], descriptors[2],
-                                                             descriptors[3], str(int(descriptors[4]) / 100),
-                                                             descriptors[5], descriptors[0])
+                                                            descriptors[3], str(int(descriptors[4]) / 100),
+                                                            descriptors[5], descriptors[0])
         plot_evolution_ea("../res/evals/EA/" + file_name, solutions[0], solutions[-1], "Evolutionary Algorithm",
                           description, "../res/graphs/EA/" + file_name_no_ext + ".svg")
 
@@ -275,12 +283,12 @@ if __name__ == '__main__':
         descriptors = file_name_no_ext.split("_")
         description = "{} Iters C.F. Type:{} Init. Temp.:{} " \
                       "Fin. Temp.:{} Alpha:{} S.F.:{} Case:{}".format(descriptors[0],
-                                                                                             descriptors[1],
-                                                                                             descriptors[2],
-                                                                                             descriptors[3],
-                                                                                             str(int(
-                                                                                                 descriptors[4]) / 100),
-                                                                                             descriptors[5],
-                                                                                             descriptors[0])
+                                                                      descriptors[1],
+                                                                      descriptors[2],
+                                                                      descriptors[3],
+                                                                      str(int(
+                                                                          descriptors[4]) / 100),
+                                                                      descriptors[5],
+                                                                      descriptors[0])
         plot_evolution_sa("../res/evals/SA/" + file_name, solutions[0], solutions[-1], "Simulated Annealing",
-                          description, "../res/graphs/SA/" + file_name_no_ext + ".svg",)
+                          description, "../res/graphs/SA/" + file_name_no_ext + ".svg", )
