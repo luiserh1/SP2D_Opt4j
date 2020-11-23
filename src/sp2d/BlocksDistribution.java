@@ -49,14 +49,21 @@ public class BlocksDistribution {
 				placedBlocks++;
 		
 		Data.currentEvaluation++;
-		if (placedBlocks > Data.bestSol + 1)
+		if (placedBlocks > Data.bestSolIter)
 		{
-			Data.bestSol = placedBlocks;
-			Data.bestRep = this;
-			myEvalNum = Data.currentEvaluation;
-			Data.newBestSol = true;
+			Data.bestSolIter = placedBlocks;
+			if (Data.bestSolIter > Data.bestSol)
+			{
+				Data.bestSol = placedBlocks;
+				Data.bestRep = this;
+				myEvalNum = Data.currentEvaluation;
+				Data.newBestSol = true;
+			}
 		}
+		if (placedBlocks < Data.worstSolIter)
+			Data.worstSolIter = placedBlocks;
 		
+		Data.solSumIter += placedBlocks;
 		return placedBlocks;
 	}
 	

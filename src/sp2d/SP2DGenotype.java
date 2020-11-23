@@ -29,24 +29,11 @@ public class SP2DGenotype extends PermutationGenotype<Integer>
 		super(values);
 	}
 	
-	public void init(boolean preOrder)
-	{
-		if (preOrder)
-		{
-			List<int[]> aux = Arrays.asList(Data.blockSizes);
-			Collections.sort(aux, new BlockComparator());
-			Data.blockSizes = aux.toArray(Data.blockSizes);
-			if (Data.verboseCreator)
-			{
-				System.out.println("Pre-ordered BlockIds");
-				for (int i = 0; i < Data.numBlocks; i++)
-					System.out.println(i + "=(" + Data.blockSizes[i][0] + ", " + Data.blockSizes[i][1] + ")");
-			}
-		}
-			
+	public void init()
+	{			
 		this.clear();
 		
-		int firstBlock = (int) (Math.random() * Data.numBlocks);
+		int firstBlock = (int) (Data.randomGen.nextDouble() * Data.numBlocks);
 		HashSet<Integer> usedBlocks = new HashSet<Integer>();
 		
 		int combinations = 0;

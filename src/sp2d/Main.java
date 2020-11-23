@@ -1,9 +1,11 @@
 package sp2d;
 
-import org.opt4j.core.Individual;
-import org.opt4j.core.optimizer.Archive;
+//import org.opt4j.core.Individual;
+//import org.opt4j.core.optimizer.Archive;
 import org.opt4j.core.start.Opt4JTask;
+//import org.opt4j.optimizers.ea.ElitismSelectorModule;
 import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
+//import org.opt4j.optimizers.ea.Nsga2Module;
 import org.opt4j.optimizers.sa.CoolingSchedulesModule;
 import org.opt4j.optimizers.sa.SimulatedAnnealingModule;
 import org.opt4j.viewer.ViewerModule;
@@ -25,6 +27,7 @@ public class Main {
 			ea.setMu(Data.mu);
 			ea.setCrossoverRate(Data.crossoverRate);
 			task.init(ea, sp2d);
+			//task.getModules().add(new ElitismSelectorModule());
 			
 			Data.dirSufix = "EA/" + Data.generations + "_" + Data.alpha +	"_" + Data.lambda + "_" +
 					Data.mu + "_" + ((int)(Data.crossoverRate * 100)) + "_" + Data.preOrderingHeuristic + "_"
@@ -59,10 +62,10 @@ public class Main {
 
 		try {
 		        task.execute();
-		        Archive archive = task.getInstance(Archive.class);
+		        /*Archive archive = task.getInstance(Archive.class);
 		        for (Individual individual : archive) {
 		                // obtain the phenotype and objective, etc. of each individual
-		        }
+		        }*/
 		} catch (Exception e) {
 		        e.printStackTrace();
 		} finally {

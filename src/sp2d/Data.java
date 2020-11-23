@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 import org.opt4j.optimizers.sa.CoolingSchedulesModule;
 
@@ -18,13 +19,16 @@ public class Data {
 	public static final boolean verboseEvals = false;
 	public static final boolean verboseProgress = true;
 	
+	// To determine the random numbers. If -1 the time is used
+	public static final int seed = -1;
+	
 	// Type of case
 	public static final TestCase testCase = TestCase.DEFAULT;
 	// Algorithm
 	public static final Algorithm algorithm = Algorithm.EA;
 	
 	// Preordeering first
-	public static final boolean preOrderingHeuristic = false;
+	public static final boolean preOrderingHeuristic = true;
 	
 	// If TestCae.RANDOM
 	public static final float sideSizeMaxProportion = 0.66f;
@@ -33,16 +37,16 @@ public class Data {
 	public static final int maxWidthR = 32;
 	
 	// When launched from the Main class
-	public static final int generations = 1000; // Or iterations in SA
+	public static final int generations = 1000000; // Or iterations in SA
 	// If Algorithm.EA
-	public static final int alpha = 100;
-	public static final int mu = 25;
-	public static final int lambda = 25;
+	public static final int alpha = 120;
+	public static final int mu = 10;
+	public static final int lambda = 20;
 	public static final float crossoverRate = 0.95f;
 	// If Algorithm.SA
 	public static CoolingSchedulesModule.Type coolingSchedule = CoolingSchedulesModule.Type.LINEAR; 
 	public static float initialTemperature = 1000.0f;
-	public static float finalTemperature = 10.0f;
+	public static float finalTemperature = 1.0f;
 	public static float saAlpha = 0.995f;
 	
 	
@@ -57,10 +61,15 @@ public class Data {
 		EA, SA
 	};
 	
+	public static Random randomGen;
+	
 	public static int bestSol;
 	public static boolean newBestSol = false;
 	public static int currentEvaluation;
 	public static BlocksDistribution bestRep;
+	public static int worstSolIter;
+	public static int bestSolIter;
+	public static int solSumIter;
 	public static long preIterationTime = System.currentTimeMillis();
 	
 	public static final int SIZEX = 0, SIZEY = 1;
@@ -146,8 +155,8 @@ public class Data {
 		blockSizes = new int[numBlocks][2];
 		for (int i = 0; i < numBlocks; i++)
 		{
-			blockSizes[i][1] = (int) (Math.random() * maxHeigth * maxSideSizeProportion + 1);
-			blockSizes[i][0] = (int) (Math.random() * maxWidth * maxSideSizeProportion  + 1);
+			blockSizes[i][1] = (int) (randomGen.nextDouble() * maxHeigth * maxSideSizeProportion + 1);
+			blockSizes[i][0] = (int) (randomGen.nextDouble() * maxWidth * maxSideSizeProportion  + 1);
 		}
 	}
 	
