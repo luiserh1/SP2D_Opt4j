@@ -48,7 +48,7 @@ public class SP2DGenotype extends PermutationGenotype<Integer>
 			int referenceHeigth = Data.blockSizes[referenceBlock][1];
 			int widthSum = 0;
 			
-			if (heigthSum + referenceHeigth > Data.maxHeigth)
+			if (heigthSum + referenceHeigth > Data.maxHeight)
 				continue;
 			
 			for (int j = 0; j < Data.numBlocks-1; j++)

@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/org.ow2.sat4j.core-2.3.3.jar"/>
 	<classpathentry kind="lib" path="lib/org.ow2.sat4j.core-2.3.3-tests.jar"/>
 	<classpathentry kind="lib" path="lib/org.ow2.sat4j.pb-2.3.3.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

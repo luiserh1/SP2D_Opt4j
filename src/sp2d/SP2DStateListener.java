@@ -6,10 +6,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerStateListener;
+import org.opt4j.core.start.Opt4JTask;
+import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
+import org.opt4j.optimizers.sa.CoolingSchedulesModule;
+import org.opt4j.optimizers.sa.SimulatedAnnealingModule;
+
+import com.google.inject.Module;
 
 public class SP2DStateListener implements OptimizerStateListener {
 
@@ -20,11 +27,45 @@ public class SP2DStateListener implements OptimizerStateListener {
 	
 	@Override
 	public void optimizationStarted(Optimizer opt)
-	{
-		if (Data.seed == -1)
-			Data.randomGen = new Random(System.currentTimeMillis());
-		else
-			Data.randomGen = new Random(Data.seed);
+	{				
+		/*if (!Data.initByMain)
+		{
+			Data.currentTask = Data.currentProvider.get();
+			Iterator<Module> it = Data.currentTask.getModules().iterator();
+			System.out.println(Data.currentTask);
+			while (it.hasNext())
+			{
+				Module md = it.next();
+				if (md instanceof EvolutionaryAlgorithmModule)
+					System.out.println("Added EAModule");
+				if (md instanceof SimulatedAnnealingModule)
+					System.out.println("Added SAModule");
+				if (md instanceof CoolingSchedulesModule)
+					System.out.println("Added SCModule");
+				System.out.println(md);
+			}
+		}*/
+		
+		if (Data.algorithm == Data.Algorithm.EA)
+		{
+			Data.dirSufix = "EA/" + Data.generations + "_" + Data.alpha +	"_" + Data.mu + "_" +
+					Data.lambda + "_" + ((int)(Data.crossoverRate * 100)) + "_" + Data.preOrderingHeuristic + "_"
+					+ Data.testCase.toString();
+		}
+		else if (Data.algorithm == Data.Algorithm.SA)
+		{
+			Data.dirSufix = "SA/" + Data.generations + "_" + Data.coolingSchedule.toString() +	"_" + (int)Data.initialTemperature + "_" +
+					(int)Data.finalTemperature + "_" + (int)(Data.saAlpha * 100) + "_" + Data.preOrderingHeuristic +
+					"_" + Data.testCase.toString();
+		}
+		
+		if (Data.testCase == Data.TestCase.RANDOM)
+			Data.dirSufix += "_" + Data.numRandBlocks + "_" + Data.maxWidthR + "_" + Data.maxHeigthR +
+					"_" + ((int)(Data.sideSizeMaxProportion * 100));
+		
+		Data.evalsOutputPath = "res/evals/" + Data.dirSufix + ".tsv";
+		Data.jsonOutputPath = "res/reps/" + Data.dirSufix + ".json";
+		
 		
 		if (Data.preOrderingHeuristic)
 		{
@@ -39,6 +80,13 @@ public class SP2DStateListener implements OptimizerStateListener {
 			}
 		}
 		
+		if (Data.algorithm == Data.Algorithm.SA)
+		{
+			Data.lastSolutionAccepted = 0;
+			Data.newSolutionAccepted = false;
+		}
+			
+		
 		Data.jsonOutput = Data.jsonDataInfo() + "\t\"evals\":\n\t[\n";
 		Data.evalsOutput = "";
 		if (Data.verboseConfig)
@@ -49,6 +97,9 @@ public class SP2DStateListener implements OptimizerStateListener {
 		Data.solSumIter = 0;
 		Data.worstSolIter = 2^31;
 		Data.bestSolIter = 0;
+		Data.renewedSolutions = 0;
+		if (Data.verboseInit)
+			System.out.println("SP2DStateListener init completed");
 	}
 
 	@Override

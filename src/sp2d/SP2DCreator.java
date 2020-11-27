@@ -14,8 +14,10 @@ public class SP2DCreator implements Creator<SP2DGenotype> {
 			blockIds.add(i);
 		
 		SP2DGenotype genotype = new SP2DGenotype(blockIds);
-		//genotype.init(new Random());
-		genotype.init();
+		if (Data.preOrderingHeuristic && Data.creationHeuristic)
+			genotype.init();
+		else
+			genotype.init(Data.randomGen);
 		return genotype;
 	}
 

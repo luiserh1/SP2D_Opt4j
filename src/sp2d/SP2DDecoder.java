@@ -40,7 +40,7 @@ public class SP2DDecoder implements Decoder<SP2DGenotype, BlocksDistribution> {
 			if (sizeY > maxHeigthInLine)
 			{
 				maxHeigthInLine = sizeY;
-				if (currentY + sizeY > Data.maxHeigth)
+				if (currentY + sizeY > Data.maxHeight)
 					break;
 			}
 			
