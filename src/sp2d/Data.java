@@ -37,12 +37,12 @@ public class Data {
 	public static final boolean closeOnFinish = true;
 	
 	// Type of case
-	public static final TestCase testCase = TestCase.RANDOM;
+	public static final TestCase testCase = TestCase.FAMILY;
 	// Algorithm
-	public static final Algorithm algorithm = Algorithm.SA;
+	public static final Algorithm algorithm = Algorithm.EA;
 	
 	// Preordeering first
-	public static final boolean preOrderingHeuristic = true;
+	public static final boolean preOrderingHeuristic = false;
 	public static final boolean creationHeuristic = true; // Requieres preOrderingHeuristic
 	
 	// If TestCae.RANDOM
@@ -52,7 +52,7 @@ public class Data {
 	public static final int maxWidthR = 32;
 	
 	// When launched from the Main class
-	public static final int generations = 500; // Or iterations per re-heating (not implemented yet) in SA
+	public static final int generations = 150000; // Or iterations per re-heating (not implemented yet) in SA
 	// If Algorithm.EA
 	public static final int alpha = 40;	// Number of initial individuals
 	public static final int mu = 4;		// Number of parents per generation
@@ -69,7 +69,7 @@ public class Data {
 	// Aux. variables, enums...
 	public static enum TestCase
 	{
-			MINI, DEFAULT, BIG, RANDOM, DEFAULT20, BIG_EXACT
+			MINI, DEFAULT, BIG, RANDOM, DEFAULT20, BIG_EXACT, FAMILY
 	};
 	
 	public static enum Algorithm

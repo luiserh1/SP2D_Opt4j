@@ -48,6 +48,9 @@ public class SP2DModule extends ProblemModule {
 			case BIG_EXACT:
 				Data.loadData("configs/big_exact.txt");
 				break;
+			case FAMILY:
+				Data.loadData("configs/family.txt");
+				break;
 			case RANDOM:
 			default:
 				Data.loadData(Data.numRandBlocks, Data.maxWidthR, Data.maxHeigthR, Data.sideSizeMaxProportion);
